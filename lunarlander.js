@@ -28,49 +28,49 @@ function trees() {
 function bear(x, y) {
   push();
   stroke(1);
+  translate(x, y);
+  scale(0.2);
   fill(92, 64, 51);
   // ears
-  ellipse(140, 120, 50, 50);
-  ellipse(260, 120, 50, 50);
+  ellipse(x + 40, y + 20, 50, 50);
+  ellipse(x + 160, y + 20, 50, 50);
 
   // arms
-  ellipse(290, 270, 50, 50);
-  ellipse(110, 270, 50, 50);
+  ellipse(x + 190, y + 170, 50, 50);
+  ellipse(x + 10, y + 170, 50, 50);
 
   // legs
-  ellipse(130, 380, 50, 50);
-  ellipse(270, 380, 50, 50);
+  ellipse(x + 30, y + 280, 50, 50);
+  ellipse(x + 170, y + 280, 50, 50);
 
   // body
-  ellipse(200, 300, 190, 200);
-  ellipse(200, 170, 150, 150);
+  ellipse(x + 100, y + 200, 190, 200);
+  ellipse(x + 100, y + 70, 150, 150);
 
   // light color accents
   fill(112, 84, 71);
-  ellipse(200, 310, 120, 130);
-  ellipse(200, 200, 60, 40);
+  ellipse(x + 100, y + 210, 120, 130);
+  ellipse(x + 100, y + 100, 60, 40);
 
   // eyes
   fill(0, 0, 0);
-  ellipse(160, 180, 10, 10);
-  ellipse(240, 180, 10, 10);
+  ellipse(x + 60, y + 80, 10, 10);
+  ellipse(x + 140, y + 80, 10, 10);
 
   // nose
-  ellipse(200, 190, 20, 10);
-  line(200, 195, 190, 205);
-  line(200, 195, 210, 205);
+  ellipse(x + 100, y + 90, 20, 10);
+  line(x + 100, y + 95, x + 90, y + 105);
+  line(x + 100, y + 95, x + 110, y + 105);
   pop();
 }
 
 function draw() {
   noStroke();
   scenery();
-  trees(60, 210);
+  trees();
 
   push();
-  scale(0.2);
-  translate(1300, 300);
-  bear(0, 0);
+  bear(250, 50);
   pop();
 
   push();
