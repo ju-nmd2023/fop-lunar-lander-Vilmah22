@@ -27,7 +27,18 @@ function trees() {
 
 function bear(x, y) {
   push();
+  // parachute
   stroke(1);
+  strokeWeight(0.5);
+
+  line(305, 90, 280, 50);
+  line(335, 90, 360, 50);
+
+  fill(255, 168, 200);
+  arc(320, 50, 80, 60, PI, 0, PIE);
+
+  stroke(1);
+  strokeWeight(1);
   translate(x, y);
   scale(0.2);
   fill(92, 64, 51);
@@ -64,13 +75,17 @@ function bear(x, y) {
   pop();
 }
 
+let bearY = 50;
+let velocity = 0.5;
+const acceleration = 0.1;
+
 function draw() {
   noStroke();
   scenery();
   trees();
 
   push();
-  bear(250, 50);
+  bear(250, bearY);
   pop();
 
   push();
@@ -83,4 +98,11 @@ function draw() {
   translate(450, 0);
   trees(0, 0);
   pop();
+
+  bearY = bearY + velocity;
+  velocity = velocity + acceleration;
+
+  if (mouseIsPressed) {
+    velocity = velocity - 0.2;
+  }
 }
