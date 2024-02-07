@@ -25,9 +25,13 @@ function trees() {
   triangle(60, 175, 45, 210, 75, 210);
 }
 
-function bear(x, y) {
-  push();
+function parachute() {
   // parachute
+  push();
+  // scale();
+
+  translate(-250, -50);
+
   stroke(1);
   strokeWeight(0.5);
 
@@ -36,11 +40,16 @@ function bear(x, y) {
 
   fill(255, 168, 200);
   arc(320, 50, 80, 60, PI, 0, PIE);
+  pop();
+}
 
+function bear(x, y) {
   stroke(1);
   strokeWeight(1);
   translate(x, y);
+  push();
   scale(0.2);
+
   fill(92, 64, 51);
   // ears
   ellipse(x + 40, y + 20, 50, 50);
@@ -73,6 +82,8 @@ function bear(x, y) {
   line(x + 100, y + 95, x + 90, y + 105);
   line(x + 100, y + 95, x + 110, y + 105);
   pop();
+
+  parachute();
 }
 
 let bearY = 50;
@@ -85,18 +96,19 @@ function draw() {
   trees();
 
   push();
-  bear(250, bearY);
-  pop();
-
-  push();
   translate(70, 75);
   scale(0.7);
-  trees(0, 0);
+  trees();
   pop();
 
   push();
   translate(450, 0);
-  trees(0, 0);
+  trees();
+  pop();
+
+  push();
+  bear(250, bearY);
+  //rachute(250, bearY);
   pop();
 
   bearY = bearY + velocity;
