@@ -111,6 +111,12 @@ function draw() {
   parachute();
   pop();
 
+  if (keyIsDown(UP_ARROW)) {
+    velocity -= 0.2;
+  } else if (keyIsDown(DOWN_ARROW)) {
+    velocity += 0.2;
+  }
+
   if (gameIsRunning === true) {
     bearY += velocity;
     velocity += acceleration;
@@ -119,10 +125,4 @@ function draw() {
     gameIsRunning = false;
     console.log("Game over");
   }
-}
-
-if (keyIsDown(UP_ARROW)) {
-  velocity -= 0.2;
-} else if (keyIsDown(DOWN_ARROW)) {
-  velocity += 0.2;
 }
