@@ -30,7 +30,7 @@ function parachute() {
   push();
   // scale();
 
-  translate(-250, -50);
+  translate(-300, -60);
 
   stroke(1);
   strokeWeight(0.5);
@@ -52,43 +52,43 @@ function bear(x, y) {
 
   fill(92, 64, 51);
   // ears
-  ellipse(x + 40, y + 20, 50, 50);
-  ellipse(x + 160, y + 20, 50, 50);
+  ellipse(40, 20, 50, 50);
+  ellipse(160, 20, 50, 50);
 
   // arms
-  ellipse(x + 190, y + 170, 50, 50);
-  ellipse(x + 10, y + 170, 50, 50);
+  ellipse(190, 170, 50, 50);
+  ellipse(10, 170, 50, 50);
 
   // legs
-  ellipse(x + 30, y + 280, 50, 50);
-  ellipse(x + 170, y + 280, 50, 50);
+  ellipse(30, 280, 50, 50);
+  ellipse(170, 280, 50, 50);
 
   // body
-  ellipse(x + 100, y + 200, 190, 200);
-  ellipse(x + 100, y + 70, 150, 150);
+  ellipse(100, 200, 190, 200);
+  ellipse(100, 70, 150, 150);
 
   // light color accents
   fill(112, 84, 71);
-  ellipse(x + 100, y + 210, 120, 130);
-  ellipse(x + 100, y + 100, 60, 40);
+  ellipse(100, 210, 120, 130);
+  ellipse(100, 100, 60, 40);
 
   // eyes
   fill(0, 0, 0);
-  ellipse(x + 60, y + 80, 10, 10);
-  ellipse(x + 140, y + 80, 10, 10);
+  ellipse(60, 80, 10, 10);
+  ellipse(140, 80, 10, 10);
 
   // nose
-  ellipse(x + 100, y + 90, 20, 10);
-  line(x + 100, y + 95, x + 90, y + 105);
-  line(x + 100, y + 95, x + 110, y + 105);
+  ellipse(100, 90, 20, 10);
+  line(100, 95, 90, 105);
+  line(100, 95, 110, 105);
   pop();
-
-  parachute();
 }
 
 let bearY = 50;
 let velocity = 0.5;
 const acceleration = 0.1;
+
+let gameIsRunning = true;
 
 function draw() {
   noStroke();
@@ -108,13 +108,21 @@ function draw() {
 
   push();
   bear(250, bearY);
-  //rachute(250, bearY);
+  parachute();
   pop();
 
-  bearY = bearY + velocity;
-  velocity = velocity + acceleration;
-
-  if (mouseIsPressed) {
-    velocity = velocity - 0.2;
+  if (gameIsRunning === true) {
+    bearY += velocity;
+    velocity += acceleration;
   }
+  if (bearY > 190) {
+    gameIsRunning = false;
+    console.log("Game over");
+  }
+}
+
+if (keyIsDown(UP_ARROW)) {
+  velocity -= 0.2;
+} else if (keyIsDown(DOWN_ARROW)) {
+  velocity += 0.2;
 }
