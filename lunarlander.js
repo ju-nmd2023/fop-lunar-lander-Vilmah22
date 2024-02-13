@@ -1,6 +1,31 @@
 function setup() {
-  createCanvas(600, 300);
+  createCanvas(550, 300);
   background(255, 255, 255);
+}
+
+function startButton() {
+  if (buttonVisible) {
+    fill(255, 255, 255);
+    stroke(1);
+    strokeWeight(2);
+    rect(220, 150, 100, 40);
+    fill(255, 168, 200);
+    textSize(20);
+    text("Start", 250, 177);
+  }
+}
+
+function howToPlay() {
+  if (howToTextVisible) {
+    fill(0, 0, 0);
+    noStroke();
+    textSize(11);
+    text(
+      "Use the up ↑ and down ↓\nkeys to help land Beary\nsafely on the ground!",
+      340,
+      160
+    );
+  }
 }
 
 function scenery() {
@@ -88,9 +113,23 @@ let bearY = 50;
 let velocity = 0.5;
 const acceleration = 0.1;
 
-let gameIsRunning = true;
+let gameIsRunning = false;
+let buttonVisible = true;
+let howToTextVisible = true;
 
 function draw() {
+  if (
+    mouseIsPressed &&
+    mouseX > 220 &&
+    mouseX < 220 + 100 &&
+    mouseY > 150 &&
+    mouseY < 150 + 40
+  ) {
+    gameIsRunning = true;
+    buttonVisible = false;
+    howToTextVisible = false;
+  }
+
   noStroke();
   scenery();
   trees();
@@ -111,6 +150,9 @@ function draw() {
   parachute();
   pop();
 
+  startButton();
+  howToPlay();
+
   if (keyIsDown(UP_ARROW)) {
     velocity -= 0.2;
   } else if (keyIsDown(DOWN_ARROW)) {
@@ -121,8 +163,9 @@ function draw() {
     bearY += velocity;
     velocity += acceleration;
   }
-  if (bearY > 190) {
+  if (bearY > 195) {
     gameIsRunning = false;
     console.log("Game over");
+    noLoop();
   }
 }
