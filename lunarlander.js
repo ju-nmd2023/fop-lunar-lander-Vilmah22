@@ -8,10 +8,10 @@ function startButton() {
     fill(255, 255, 255);
     stroke(1);
     strokeWeight(2);
-    rect(220, 150, 100, 40);
+    rect(216, 150, 110, 40, 7);
     fill(255, 168, 200);
     textSize(20);
-    text("Start", 250, 177);
+    text("S T A R T", 227, 177);
   }
 }
 
@@ -25,6 +25,18 @@ function howToPlay() {
       340,
       160
     );
+  }
+}
+
+function retryButton() {
+  if (retryButtonVisible) {
+    fill(255, 255, 255);
+    stroke(1);
+    strokeWeight(2);
+    rect(350, 95, 100, 40, 7);
+    textSize(17);
+    fill(255, 168, 200);
+    text("R E T R Y", 362, 122);
   }
 }
 
@@ -111,11 +123,12 @@ function bear(x, y) {
 
 let bearY = 50;
 let velocity = 0.5;
-const acceleration = 0.1;
+let acceleration = 0.04;
 
 let gameIsRunning = false;
 let buttonVisible = true;
 let howToTextVisible = true;
+let retryButtonVisible = false;
 
 function draw() {
   if (
@@ -128,6 +141,19 @@ function draw() {
     gameIsRunning = true;
     buttonVisible = false;
     howToTextVisible = false;
+  }
+
+  if (
+    mouseIsPressed &&
+    mouseX > 350 &&
+    mouseX < 350 + 100 &&
+    mouseY > 100 &&
+    mouseY < 100 + 40
+  ) {
+    /*retryButtonVisible = false;
+    gameIsRunning = false;
+    buttonVisible = true;
+    howToTextVisible = true;*/
   }
 
   noStroke();
@@ -154,9 +180,9 @@ function draw() {
   howToPlay();
 
   if (keyIsDown(UP_ARROW)) {
-    velocity -= 0.2;
+    velocity -= 0.5;
   } else if (keyIsDown(DOWN_ARROW)) {
-    velocity += 0.2;
+    velocity += 0.5;
   }
 
   if (gameIsRunning === true) {
@@ -165,7 +191,22 @@ function draw() {
   }
   if (bearY > 195) {
     gameIsRunning = false;
-    console.log("Game over");
+    if (velocity <= 0.6) {
+      fill(252, 126, 173);
+      textSize(20);
+      noStroke();
+      text("You win!", 235, 120);
+      retryButtonVisible = true;
+      console.log("Win!");
+    } else {
+      fill(252, 126, 173);
+      textSize(20);
+      noStroke();
+      text("You lose :(", 225, 120);
+      retryButtonVisible = true;
+      console.log("Game over");
+    }
     noLoop();
+    retryButton();
   }
 }
