@@ -130,6 +130,24 @@ let buttonVisible = true;
 let howToTextVisible = true;
 let retryButtonVisible = false;
 
+function mousePressed() {
+  if (
+    mouseIsPressed &&
+    mouseX > 350 &&
+    mouseX < 350 + 100 &&
+    mouseY > 100 &&
+    mouseY < 100 + 40
+  ) {
+    gameIsRunning = false;
+    buttonVisible = true;
+    howToTextVisible = true;
+    bearY = 50;
+    velocity = 0.5;
+    retryButtonVisible = false;
+    loop();
+  }
+}
+
 function draw() {
   if (
     mouseIsPressed &&
@@ -141,19 +159,6 @@ function draw() {
     gameIsRunning = true;
     buttonVisible = false;
     howToTextVisible = false;
-  }
-
-  if (
-    mouseIsPressed &&
-    mouseX > 350 &&
-    mouseX < 350 + 100 &&
-    mouseY > 100 &&
-    mouseY < 100 + 40
-  ) {
-    /*retryButtonVisible = false;
-    gameIsRunning = false;
-    buttonVisible = true;
-    howToTextVisible = true;*/
   }
 
   noStroke();
@@ -189,6 +194,7 @@ function draw() {
     bearY += velocity;
     velocity += acceleration;
   }
+
   if (bearY > 195) {
     gameIsRunning = false;
     if (velocity <= 0.6) {
