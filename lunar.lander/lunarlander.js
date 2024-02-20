@@ -3,43 +3,6 @@ function setup() {
   background(255, 255, 255);
 }
 
-function startButton() {
-  if (buttonVisible) {
-    fill(255, 255, 255);
-    stroke(1);
-    strokeWeight(2);
-    rect(216, 150, 110, 40, 7);
-    fill(255, 168, 200);
-    textSize(20);
-    text("S T A R T", 227, 177);
-  }
-}
-
-function howToPlay() {
-  if (howToTextVisible) {
-    fill(0, 0, 0);
-    noStroke();
-    textSize(11);
-    text(
-      "Use the up ↑ and down ↓\nkeys to help land Beary\nsafely on the ground!",
-      340,
-      160
-    );
-  }
-}
-
-function retryButton() {
-  if (retryButtonVisible) {
-    fill(255, 255, 255);
-    stroke(1);
-    strokeWeight(2);
-    rect(350, 95, 100, 40, 7);
-    textSize(17);
-    fill(255, 168, 200);
-    text("R E T R Y", 362, 122);
-  }
-}
-
 function scenery() {
   // sky
   fill(190, 230, 255);
@@ -121,47 +84,55 @@ function bear(x, y) {
   pop();
 }
 
-let bearY = 50;
-let velocity = 0.5;
-let acceleration = 0.04;
+function startScreen() {
+  if (state === "start") {
+    background(190, 230, 255);
+    textSize(50);
+    text("Bear Parachute", 120, 50);
 
-let gameIsRunning = false;
-let buttonVisible = true;
-let howToTextVisible = true;
-let retryButtonVisible = false;
-
-function mousePressed() {
-  if (
-    mouseIsPressed &&
-    mouseX > 350 &&
-    mouseX < 350 + 100 &&
-    mouseY > 100 &&
-    mouseY < 100 + 40
-  ) {
-    gameIsRunning = false;
-    buttonVisible = true;
-    howToTextVisible = true;
-    bearY = 50;
-    velocity = 0.5;
-    retryButtonVisible = false;
-    loop();
+    fill(0, 0, 0);
+    noStroke();
+    textSize(11);
+    text(
+      "Use the up ↑ and down ↓\nkeys to help land Beary\nsafely on the ground!",
+      90,
+      160
+    );
+    startButton();
+    bear(260, 220);
   }
 }
 
-function draw() {
-  if (
-    mouseIsPressed &&
-    mouseX > 220 &&
-    mouseX < 220 + 100 &&
-    mouseY > 150 &&
-    mouseY < 150 + 40
-  ) {
-    gameIsRunning = true;
-    buttonVisible = false;
-    howToTextVisible = false;
-  }
+function startButton() {
+  fill(255, 255, 255);
+  stroke(1);
+  strokeWeight(2);
+  rect(226, 150, 110, 40, 7);
+  fill(255, 168, 200);
+  textSize(20);
+  text("S T A R T", 237, 177);
+}
 
-  noStroke();
+function retryButton() {
+  fill(255, 255, 255);
+  stroke(1);
+  strokeWeight(2);
+  rect(350, 95, 100, 40, 7);
+  textSize(17);
+  fill(255, 168, 200);
+  text("R E T R Y", 362, 122);
+}
+
+function resultScreen() {
+  if (state === "result") {
+    background(190, 230, 255);
+    retryButton();
+    text("You win!", 200, 100);
+  }
+}
+
+function gameScreen() {
+  if (state === "game") noStroke();
   scenery();
   trees();
 
@@ -180,9 +151,52 @@ function draw() {
   bear(250, bearY);
   parachute();
   pop();
+}
 
-  startButton();
-  howToPlay();
+let bearY = 50;
+let velocity = 0.5;
+let acceleration = 0.04;
+
+let gameIsRunning = false;
+let state = "start";
+
+// retry button
+/* function mousePressed() {
+  if (
+    mouseIsPressed &&
+    mouseX > 350 &&
+    mouseX < 350 + 100 &&
+    mouseY > 100 &&
+    mouseY < 100 + 40
+  ) {
+    gameIsRunning = true;
+    bearY = 50;
+    velocity = 0.5;
+    retryButtonVisible = false;
+    loop();
+  }
+} */
+
+function draw() {
+  if (state === "start") {
+    startScreen();
+  } else if (state === "game") {
+    gameScreen();
+  } else if (state === "result") {
+    resultScreen();
+  }
+
+  /*if (
+    mouseIsPressed &&
+    mouseX > 220 &&
+    mouseX < 220 + 100 &&
+    mouseY > 150 &&
+    mouseY < 150 + 40
+  ) {
+    startScreenVisible = false;
+    gameIsRunning = true;
+    buttonVisible = false;
+  } */
 
   if (keyIsDown(UP_ARROW)) {
     velocity -= 0.5;
@@ -202,17 +216,37 @@ function draw() {
       textSize(20);
       noStroke();
       text("You win!", 235, 120);
-      retryButtonVisible = true;
       console.log("Win!");
     } else {
       fill(252, 126, 173);
       textSize(20);
       noStroke();
       text("You lose :(", 225, 120);
-      retryButtonVisible = true;
       console.log("Game over");
     }
     noLoop();
-    retryButton();
+  }
+}
+
+function mousePressed() {
+  if (state === "start") {
+    if (
+      mouseIsPressed &&
+      mouseX > 220 &&
+      mouseX < 220 + 100 &&
+      mouseY > 150 &&
+      mouseY < 150 + 40
+    ) {
+      state = "game";
+      gameIsRunning = true;
+    } else if (state === "game") {
+      state = "result";
+    } else if (state === "result") {
+      state = "game";
+      gameIsRunning = true;
+      bearY = 50;
+      velocity = 0.5;
+      loop();
+    }
   }
 }
