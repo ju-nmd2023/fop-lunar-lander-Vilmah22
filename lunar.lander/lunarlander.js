@@ -123,14 +123,6 @@ function retryButton() {
   text("R E T R Y", 362, 122);
 }
 
-function resultScreen() {
-  if (state === "result") {
-    background(190, 230, 255);
-    retryButton();
-    text("You win!", 200, 100);
-  }
-}
-
 function gameScreen() {
   if (state === "game") noStroke();
   scenery();
@@ -160,31 +152,14 @@ let acceleration = 0.04;
 let gameIsRunning = false;
 let state = "start";
 
-// retry button
-/* function mousePressed() {
-  if (
-    mouseIsPressed &&
-    mouseX > 350 &&
-    mouseX < 350 + 100 &&
-    mouseY > 100 &&
-    mouseY < 100 + 40
-  ) {
-    gameIsRunning = true;
-    bearY = 50;
-    velocity = 0.5;
-    retryButtonVisible = false;
-    loop();
-  }
-} */
-
 function draw() {
   if (state === "start") {
     startScreen();
   } else if (state === "game") {
     gameScreen();
-  } else if (state === "result") {
+  } /*else if (state === "result") {
     resultScreen();
-  }
+  } */
 
   /*if (
     mouseIsPressed &&
@@ -212,12 +187,14 @@ function draw() {
   if (bearY > 195) {
     gameIsRunning = false;
     if (velocity <= 0.6) {
+      retryButton();
       fill(252, 126, 173);
       textSize(20);
       noStroke();
       text("You win!", 235, 120);
       console.log("Win!");
     } else {
+      retryButton();
       fill(252, 126, 173);
       textSize(20);
       noStroke();
@@ -227,6 +204,22 @@ function draw() {
     noLoop();
   }
 }
+
+// retry button
+/* function mousePressed() {
+if (
+    mouseIsPressed &&
+    mouseX > 350 &&
+    mouseX < 350 + 100 &&
+    mouseY > 100 &&
+    mouseY < 100 + 40
+  ) {
+    gameIsRunning = true;
+    bearY = 50;
+    velocity = 0.5;
+    loop();
+  } 
+}*/
 
 function mousePressed() {
   if (state === "start") {
@@ -239,14 +232,19 @@ function mousePressed() {
     ) {
       state = "game";
       gameIsRunning = true;
-    } else if (state === "game") {
-      state = "result";
-    } else if (state === "result") {
-      state = "game";
-      gameIsRunning = true;
-      bearY = 50;
-      velocity = 0.5;
-      loop();
     }
+  }
+  if (
+    mouseIsPressed &&
+    mouseX > 350 &&
+    mouseX < 350 + 100 &&
+    mouseY > 100 &&
+    mouseY < 100 + 40
+  ) {
+    state = "start";
+    gameIsRunning = false;
+    bearY = 50;
+    velocity = 0.5;
+    loop();
   }
 }
