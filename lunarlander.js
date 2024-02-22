@@ -28,7 +28,6 @@ function trees() {
 function parachute() {
   // parachute
   push();
-  // scale();
 
   translate(-300, -60);
 
@@ -204,22 +203,6 @@ function draw() {
     noLoop();
   }
 }
-
-// retry button
-/* function mousePressed() {
-if (
-    mouseIsPressed &&
-    mouseX > 350 &&
-    mouseX < 350 + 100 &&
-    mouseY > 100 &&
-    mouseY < 100 + 40
-  ) {
-    gameIsRunning = true;
-    bearY = 50;
-    velocity = 0.5;
-    loop();
-  } 
-}*/
 
 function mousePressed() {
   if (state === "start") {
